@@ -12,7 +12,7 @@ import (
 
 const AppEngineVersionAssetType string = "appengine.googleapis.com/Version"
 
-func resourceAppEngineVersion() cai.ResourceConverter {
+func resourceAppEngineStandardAppVersion() cai.ResourceConverter {
 	return cai.ResourceConverter{
 		AssetType: AppEngineVersionAssetType,
 		Convert:   GetAppEngineVersionCaiObject,
@@ -42,14 +42,14 @@ func GetAppEngineVersionCaiObject(d tpgresource.TerraformResourceData, config *t
 
 func GetAppEngineVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-	
+
 	nameProp, err := expandAppEngineVersionName(d.Get("name"), d, config)
 	if err != nil {
 		return nil, err
 	} else if v, ok := d.GetOkExists("name"); !tpgresource.IsEmptyValue(reflect.ValueOf(nameProp)) && (ok || !reflect.DeepEqual(v, nameProp)) {
 		obj["name"] = nameProp
 	}
-	
+
 	idProp, err := expandAppEngineVersionId(d.Get("version_id"), d, config)
 	if err != nil {
 		return nil, err
@@ -327,7 +327,7 @@ func expandAppEngineVersionAutomaticScaling(v interface{}, d tpgresource.Terrafo
 	} else if val := reflect.ValueOf(transformedMinIdleInstances); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["minIdleInstances"] = transformedMinIdleInstances
 	}
-	
+
 	transformedMinPendingLatency, err := expandAppEngineVersionMinPendingLatency(original["min_pending_latency"], d, config)
 	if err != nil {
 		return nil, err
@@ -353,7 +353,7 @@ func expandAppEngineVersionStandardSchedulerSettings(v interface{}, d tpgresourc
 	raw := l[0]
 	original := raw.(map[string]interface{})
 	transformed := make(map[string]interface{})
-	
+
 	transformedTargetCpuUtilization, err := expandAppEngineVersionTargetCpuUtilization(original["target_cpu_utilization"], d, config)
 	if err != nil {
 		return nil, err
@@ -367,7 +367,7 @@ func expandAppEngineVersionStandardSchedulerSettings(v interface{}, d tpgresourc
 	} else if val := reflect.ValueOf(transformedTargetThroughputUtilization); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["targetThroughputUtilization"] = transformedTargetThroughputUtilization
 	}
-	
+
 	transformedMinInstances, err := expandAppEngineVersionMinInstances(original["min_instances"], d, config)
 	if err != nil {
 		return nil, err
@@ -638,7 +638,6 @@ func expandAppEngineVersionCreatedBy(v interface{}, d tpgresource.TerraformResou
 	return v, nil
 }
 
-
 func expandAppEngineVersionUrlRegex(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
 }
@@ -701,21 +700,21 @@ func expandAppEngineVersionStaticFilesHandler(v interface{}, d tpgresource.Terra
 		return nil, err
 	} else if val := reflect.ValueOf(transformedExpiration); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["expiration"] = transformedExpiration
-	}	
-	
+	}
+
 	transformedRequireMatchingFile, err := expandAppEngineVersionRequireMatchingFile(original["require_matching_file"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedRequireMatchingFile); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["requireMatchingFile"] = transformedRequireMatchingFile
-	}	
+	}
 
 	transformedApplicationReadable, err := expandAppEngineVersionApplicationReadable(original["application_readable"], d, config)
 	if err != nil {
 		return nil, err
 	} else if val := reflect.ValueOf(transformedApplicationReadable); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["applicationReadable"] = transformedApplicationReadable
-	}	
+	}
 
 	return transformed, nil
 }
@@ -804,7 +803,7 @@ func expandAppEngineVersionHandlers(v interface{}, d tpgresource.TerraformResour
 		} else if val := reflect.ValueOf(transformedAuthFailAction); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["authFailAction"] = transformedAuthFailAction
 		}
-		
+
 		transformedRedirectHttpResponseCode, err := expandAppEngineVersionRedirectHttpResponseCode(original["redirect_http_response_code"], d, config)
 		if err != nil {
 			return nil, err
@@ -904,7 +903,6 @@ func expandAppEngineVersionShell(v interface{}, d tpgresource.TerraformResourceD
 	return v, nil
 }
 
-
 func expandAppEngineVersionDeployment(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -946,7 +944,7 @@ func expandAppEngineVersionZip(v interface{}, d tpgresource.TerraformResourceDat
 	} else if val := reflect.ValueOf(transformedSourceUrlProp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 		transformed["sourceUrl"] = transformedSourceUrlProp
 	}
-	
+
 	filesCountProp, err := expandAppEngineVersionFilesCount(original["files_count"], d, config)
 	if err != nil {
 		return nil, err
@@ -956,7 +954,6 @@ func expandAppEngineVersionZip(v interface{}, d tpgresource.TerraformResourceDat
 
 	return transformed, nil
 }
-
 
 func expandAppEngineVersionSourceUrl(v interface{}, d tpgresource.TerraformResourceData, config *transport_tpg.Config) (interface{}, error) {
 	return v, nil
@@ -997,7 +994,7 @@ func expandAppEngineVersionFiles(v interface{}, d tpgresource.TerraformResourceD
 		} else if val := reflect.ValueOf(transformedNameProp); val.IsValid() && !tpgresource.IsEmptyValue(val) {
 			transformed["name"] = transformedNameProp
 		}
-		
+
 		req = append(req, transformed)
 	}
 
