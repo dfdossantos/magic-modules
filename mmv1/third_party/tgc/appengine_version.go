@@ -10,24 +10,24 @@ import (
 	transport_tpg "github.com/hashicorp/terraform-provider-google-beta/google-beta/transport"
 )
 
-const AppEngineVersionAssetType string = "appengine.googleapis.com/Version"
+const AppEngineStandardAppVersionAssetType string = "appengine.googleapis.com/Version"
 
 func resourceAppEngineStandardAppVersion() cai.ResourceConverter {
 	return cai.ResourceConverter{
-		AssetType: AppEngineVersionAssetType,
-		Convert:   GetAppEngineVersionCaiObject,
+		AssetType: AppEngineStandardAppVersionAssetType,
+		Convert:   GetAppEngineStandardAppVersionCaiObject,
 	}
 }
 
-func GetAppEngineVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
+func GetAppEngineStandardAppVersionCaiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) ([]cai.Asset, error) {
 	name, err := cai.AssetName(d, config, "//appengine.googleapis.com/apps/{{project}}/services/default/versions/v1")
 	if err != nil {
 		return []cai.Asset{}, err
 	}
-	if obj, err := GetAppEngineVersionApiObject(d, config); err == nil {
+	if obj, err := GetAppEngineStandardAppVersionApiObject(d, config); err == nil {
 		return []cai.Asset{{
 			Name: name,
-			Type: AppEngineVersionAssetType,
+			Type: AppEngineStandardAppVersionAssetType,
 			Resource: &cai.AssetResource{
 				Version:              "v1",
 				DiscoveryDocumentURI: "https://www.googleapis.com/discovery/v1/apis/appengine/v1/rest",
@@ -40,7 +40,7 @@ func GetAppEngineVersionCaiObject(d tpgresource.TerraformResourceData, config *t
 	}
 }
 
-func GetAppEngineVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
+func GetAppEngineStandardAppVersionApiObject(d tpgresource.TerraformResourceData, config *transport_tpg.Config) (map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	nameProp, err := expandAppEngineVersionName(d.Get("name"), d, config)
